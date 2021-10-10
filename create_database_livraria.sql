@@ -10,11 +10,11 @@ CREATE TABLE editora(
 CREATE TABLE acervo (
     id INT NOT NULL AUTO_INCREMENT,
     id_editora INT DEFAULT NULL,
-    titulo VARCHAR(100) NOT NULL DEFAULT '',
-    autor VARCHAR(60) NOT NULL DEFAULT '',
+    titulo VARCHAR(100) NOT NULL,
+    autor VARCHAR(60) NOT NULL,
     ano INT DEFAULT NULL,
-    preco DOUBLE(11,2) DEFAULT NULL,
-    quantidade INT DEFAULT NULL,
+    preco DOUBLE(11,2) NOT NULL,
+    quantidade INT NOT NULL DEFAULT 1,
     tipo INT DEFAULT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_editora) REFERENCES editora(id)
