@@ -45,10 +45,9 @@ function filtrar_todas_editoras() {
     // Retorna todos os registros encontrados
     return $editoras;
 }
-// Inserir acervo
+// Inserir acervo com editora
 function inserir_acervo( $acervo ) {
     global $conexao;
-    // Impedir SQL Injection
     $id_editora = mysqli_real_escape_string( $conexao, $acervo['id_editora'] );
     $titulo = mysqli_real_escape_string( $conexao, $acervo['titulo'] );
     $autor = mysqli_real_escape_string( $conexao, $acervo['autor'] );
@@ -56,10 +55,26 @@ function inserir_acervo( $acervo ) {
     $preco = mysqli_real_escape_string( $conexao, $acervo['preco'] );
     $quantidade = mysqli_real_escape_string( $conexao, $acervo['quantidade'] );
     $tipo = mysqli_real_escape_string( $conexao, $acervo['tipo'] );
- 
     // Comando SQL para selecionar todos os registros
     $sql = "INSERT INTO acervo (id_editora, titulo, autor, ano, preco, quantidade, tipo) " .
     "VALUES ('$id_editora', '$titulo', '$autor', '$ano', '$preco', '$quantidade', '$tipo')";
+    // Executa comando SQL
+    $resultado = mysqli_query( $conexao, $sql );
+    // Retorna resultado da transação
+    return $resultado;
+}
+// Inserir acervo sem editora
+function inserir_acervo_sem_editora( $acervo ) {
+    global $conexao;
+    $titulo = mysqli_real_escape_string( $conexao, $acervo['titulo'] );
+    $autor = mysqli_real_escape_string( $conexao, $acervo['autor'] );
+    $ano = mysqli_real_escape_string( $conexao, $acervo['ano'] );
+    $preco = mysqli_real_escape_string( $conexao, $acervo['preco'] );
+    $quantidade = mysqli_real_escape_string( $conexao, $acervo['quantidade'] );
+    $tipo = mysqli_real_escape_string( $conexao, $acervo['tipo'] );
+    // Comando SQL para selecionar todos os registros
+    $sql = "INSERT INTO acervo (titulo, autor, ano, preco, quantidade, tipo) " .
+    "VALUES ('$titulo', '$autor', '$ano', '$preco', '$quantidade', '$tipo')";
     // Executa comando SQL
     $resultado = mysqli_query( $conexao, $sql );
     // Retorna resultado da transação
@@ -110,16 +125,15 @@ function excluir_acervo( $id ) {
 // Retorna a editora
 function retorna_editora( $id ) {
     global $conexao;
-    if($id != NULL){
-        // Impedir SQL Injection
-        $id = mysqli_real_escape_string( $conexao, $id );
-        // Comando SQL para selecionar todos os registros
-        $sql = "SELECT nome FROM editora WHERE id = '$id'";
-        // Executa comando SQL
-        $resultado = mysqli_query( $conexao, $sql );
-        // Retorna resultado da transação
-        return $resultado;
-    }
-    return 'Sem registro';
+    // Impedir SQL Injection
+    $id = mysqli_real_escape_string( $conexao, $id );
+    // Comando SQL para selecionar todos os registros
+    $sql = "SELECT nome FROM editora WHERE id = '$id'";
+    // Executa comando SQL
+    $resultado = mysqli_query( $conexao, $sql );
+    $row = $resultado->fetch_row();
+    $nome = $row[0] ?? 'Sem registro';
+    // Retorna resultado da transação
+    return $nome;
 }
 ?>

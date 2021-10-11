@@ -19,8 +19,12 @@ switch ( $_REQUEST['acao'] ) {
         }
         
         // Verificar se o registro é novo
-        if ( empty( $id ) )
-            inserir_acervo( $_POST );
+        if ( empty( $id ) ){
+            if(empty($_POST['id_editora']))
+                inserir_acervo_sem_editora( $_POST );
+            else
+                inserir_acervo( $_POST );
+        }
         else
             alterar_acervo( $_POST );
         break;
