@@ -59,8 +59,7 @@ if ( isset( $_GET['id'] ) && ! empty( $_GET['id'] ) ) {
                     </div>
                     <div class="form-group">
                         <label for="preco">Número</label>
-                        <input type="number" name="preco" id="preco" class="form-control" value="<?php echo $acervo['preco']; ?>" min="1"
-                        max="99999999">
+                        <input type="number" name="preco" id="preco" class="form-control" value="<?php echo $acervo['preco']; ?>" min="1" max="99999999">
                     </div>
                     <div class="form-group">
                         <label for="quantidade">quantidade</label>
