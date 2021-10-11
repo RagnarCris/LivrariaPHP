@@ -14,15 +14,36 @@ function filtrar_acervo_por_id( $id ) {
     // Retorna registro encontrado
     return mysqli_fetch_assoc( $resultado );
 }
+function pesquisa_acervo_por_titulo( $pesquisa ) {
+    global $conexao;
+    // Impedir SQL Injection
+    $pesquisa = mysqli_real_escape_string( $conexao, $pesquisa );
+    // Comando SQL para selecionar registro por ID
+    $sql = "SELECT * FROM acervo WHERE titulo LIKE'%$pesquisa%' ORDER BY titulo";
+    // Executa comando SQL
+    $resultado = mysqli_query( $conexao, $sql );
+    // Retorna registro encontrado
+    return $resultado;
+}
 // Buscar todos os acervos
 function filtrar_todos_acervos() {
     global $conexao;
     // Comando SQL para selecionar todos os registros
-    $sql = "SELECT * FROM acervo";
+    $sql = "SELECT * FROM acervo ORDER BY id DESC";
     // Executa comando SQL
     $acervos = mysqli_query( $conexao, $sql );
     // Retorna todos os registros encontrados
     return $acervos;
+}
+// Busca todas as editoras
+function filtrar_todas_editoras() {
+    global $conexao;
+    // Comando SQL para selecionar todos os registros
+    $sql = "SELECT * FROM editora ORDER BY id DESC";
+    // Executa comando SQL
+    $editoras = mysqli_query( $conexao, $sql );
+    // Retorna todos os registros encontrados
+    return $editoras;
 }
 // Inserir acervo
 function inserir_acervo( $acervo ) {
@@ -86,3 +107,19 @@ function excluir_acervo( $id ) {
     // Retorna resultado da transação
     return $resultado;
 }
+// Retorna a editora
+function retorna_editora( $id ) {
+    global $conexao;
+    if($id != NULL){
+        // Impedir SQL Injection
+        $id = mysqli_real_escape_string( $conexao, $id );
+        // Comando SQL para selecionar todos os registros
+        $sql = "SELECT nome FROM editora WHERE id = '$id'";
+        // Executa comando SQL
+        $resultado = mysqli_query( $conexao, $sql );
+        // Retorna resultado da transação
+        return $resultado;
+    }
+    return 'Sem registro';
+}
+?>
